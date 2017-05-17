@@ -7,6 +7,13 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/apt/archives/*.deb
 
+
+# Make locally-built containers run as not-root
+RUN useradd -m notroot && \
+  chmod -R 0777 /usr/local/lib/python2.7/* && \
+  chmod -R 0777 /usr/local/bin
+USER notroot
+
 # Install Pip & Setuptools
 RUN curl -s https://bootstrap.pypa.io/get-pip.py | /usr/bin/python
 
@@ -14,13 +21,10 @@ RUN curl -s https://bootstrap.pypa.io/get-pip.py | /usr/bin/python
 ENV PYTHONPATH=/app/
 WORKDIR /app
 
-# Make locally-built containers run as not-root
-RUN useradd -m notroot
-USER notroot
 
 # Install requirements, and add the app on build
 ONBUILD ADD requirements.txt /app/
-ONBUILD RUN sudo /usr/local/bin/pip install -r requirements.txt
+ONBUILD RUN /usr/local/bin/pip install -r requirements.txt
 ONBUILD ADD . /app
 
 CMD ["python"]
