@@ -19,6 +19,7 @@ RUN curl -s https://bootstrap.pypa.io/get-pip.py | /usr/bin/python
 
 # Make python read modules from /app/
 ENV PYTHONPATH=/app/
+ENV PYTHONUNBUFFERED=true
 WORKDIR /app
 
 
