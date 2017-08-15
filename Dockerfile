@@ -22,10 +22,4 @@ ENV PYTHONPATH=/app/
 ENV PYTHONUNBUFFERED=true
 WORKDIR /app
 
-
-# Install requirements, and add the app on build
-ONBUILD ADD requirements.txt /app/
-ONBUILD RUN /usr/local/bin/pip install -r requirements.txt
-ONBUILD ADD . /app
-
 CMD ["python"]
