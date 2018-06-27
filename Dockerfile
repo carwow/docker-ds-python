@@ -11,7 +11,9 @@ RUN apt-get update && \
 # Make locally-built containers run as not-root
 RUN useradd -m notroot && \
   chmod -R 0777 /usr/local/lib/python2.7/* && \
-  chmod -R 0777 /usr/local/bin
+  chmod -R 0777 /usr/local/bin && \
+  mkdir -p /app && \
+  chmod -R 0777 /app
 USER notroot
 
 # Install Pip & Setuptools
